@@ -22,3 +22,6 @@ jobs:
           name: e2e-wordpress-plugin
           path: ~/download
       - run: cd ~/download && pwd && ls -R
+      - run: export SQUARE_ZIP_PATH=/home/runner/download/e2e.zip
+      - run: echo "Square download path:"
+      - run: echo $SQUARE_ZIP_PATH
