@@ -1,1 +1,0 @@
-console.log( '>>> Running node script from index.js' );

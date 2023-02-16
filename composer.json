@@ -1,0 +1,17 @@
+{
+    "name": "siddharth/e2e-experimential",
+    "autoload": {
+        "psr-4": {
+            "Siddharth\\E2eExperimential\\": "src/"
+        }
+    },
+    "require": {},
+    "archive": {
+        "exclude": [
+            "vendor",
+            "composer.json",
+            "package.json",
+            ".gitignore"
+        ]
+    }
+}
