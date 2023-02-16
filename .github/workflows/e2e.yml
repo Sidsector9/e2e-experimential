@@ -15,5 +15,9 @@ jobs:
       - run: composer archive --format=zip --file=e2e
       - uses: actions/upload-artifact@v3
         with:
-          name: e2e-artifact
+          name: e2e-wordpress-plugin
           path: e2e.zip
+      - uses: actions/download-artifact@v3
+        with:
+          name: e2e-wordpress-plugin
+      - run: pwd && ls -R
