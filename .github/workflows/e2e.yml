@@ -20,4 +20,5 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: e2e-wordpress-plugin
-      - run: pwd && ls -R
+          path: ~/download
+      - run: cd ~/download && pwd && ls -R
