@@ -1,0 +1,17 @@
+name: Install Easy Engine
+on: [push]
+jobs:
+  run-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          tools: composer:v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: wget -qO ee rt.cx/ee4 && sudo bash ee
+      - run: ee site create somesite.com --wp --letsencrypt
+
+
