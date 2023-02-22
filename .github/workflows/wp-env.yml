@@ -2,7 +2,7 @@ name: Install Easy Engine
 on: [push]
 jobs:
   run-e2e:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v3
       - uses: shivammathur/setup-php@v2
@@ -11,7 +11,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: wget -qO ee rt.cx/ee4 && sudo bash ee
-      - run: ee site create somesite.com --wp --letsencrypt
 
+      - uses: ankane/setup-mariadb@v1
+        with:
+          mariadb-version: "10.10"
+      - run: mysql -uroot -h127.0.0.1 -e 'SELECT version()'
+      - run: wget -qO ee rt.cx/ee4 && sudo bash ee
+      - run: ee --version
+      - run: sudo apt-get upgrade
+      - run: sudo ee site create somesitesid.com --type=wp
+      - run: curl somesitesid.com
 
