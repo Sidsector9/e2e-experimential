@@ -10,11 +10,12 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, format('needs{0} e2e-testing', ':')) || github.ref == 'refs/heads/smoke-testing'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello"
+      - name: E2E tests
+        run: echo "Hello"
 
       - name: Add "status - e2e tests passing"
-      - if: success() && github.event_name == 'pull_request'
-      - uses: actions/labeler@v3
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/labeler@v3
         with:
-          labels: status - e2e tests passing
+          labels: 'status - e2e tests passing'
 
