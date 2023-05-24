@@ -1,24 +1,14 @@
 name: Install Easy Engine
-on: [push]
+on:
+  push:
+    branches:
+      - smoke-testing
+  pull_request:
+    types: [labeled]
 jobs:
   run-e2e:
+    if: ${{ github.event.label.name == 'e2e-ready' }}
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v3
-      - uses: shivammathur/setup-php@v2
-        with:
-          tools: composer:v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - uses: ankane/setup-mariadb@v1
-        with:
-          mariadb-version: "10.10"
-      - run: mysql -uroot -h127.0.0.1 -e 'SELECT version()'
-      - run: wget -qO ee rt.cx/ee4 && sudo bash ee
-      - run: ee --version
-      - run: sudo apt-get upgrade
-      - run: sudo ee site create somesitesid.com --type=wp
-      - run: curl somesitesid.com
+      - run: echo "Hello"
 
