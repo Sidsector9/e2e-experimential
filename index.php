@@ -3,6 +3,4 @@
  * Plugin Name: Some plugin.
  */
 
-add_action( 'init', function() {
-	echo 'Hello, user!';
-} );
+// PR with label
