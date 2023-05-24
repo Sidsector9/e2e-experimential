@@ -7,7 +7,7 @@ on:
     types: [labeled, synchronize]
 jobs:
   run-e2e:
-    if: contains(github.event.pull_request.labels.*.name, 'e2e-ready')
+    if: contains(github.event.pull_request.labels.*.name, 'e2e-ready') || github.ref == 'refs/heads/smoke-testing'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello"
