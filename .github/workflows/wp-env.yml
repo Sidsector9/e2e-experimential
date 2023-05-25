@@ -9,6 +9,8 @@ jobs:
   run-e2e:
     if: contains(github.event.pull_request.labels.*.name, format('needs{0} e2e-testing', ':')) || github.ref == 'refs/heads/smoke-testing'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: E2E tests
         run: echo "Hello"
