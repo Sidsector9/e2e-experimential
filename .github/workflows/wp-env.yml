@@ -15,7 +15,8 @@ jobs:
 
       - name: Add "status - e2e tests passing"
         if: success() && github.event_name == 'pull_request'
-        uses: actions/labeler@v3
+        uses: actions/labeler@v4
         with:
-          labels: 'status - e2e tests passing'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
 
