@@ -14,6 +14,6 @@ jobs:
         run: echo "Hello"
 
       - name: Add "status - e2e tests passing"
-        if: success() && github.event_name == 'pull_request'
+        if: success() && github.event_name == 'pull_request' && ! contains(github.event.pull_request.labels.*.name, format('needs{0} e2e-testing', ':'))
         run: echo "This has passed"
 
