@@ -7,15 +7,42 @@ on:
     types: [labeled, synchronize]
 jobs:
   run-e2e:
-    if: contains(github.event.pull_request.labels.*.name, format('needs{0} e2e-testing', ':')) || github.ref == 'refs/heads/smoke-testing'
+    if: ( contains(github.event.pull_request.labels.*.name, format('needs{0} e2e-testing', ':')) || github.ref == 'refs/heads/smoke-testing' )
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: E2E tests
-        run: echo "Hello"
+        run: false
 
+      # Add the "status: e2e tests passing" label when tests pass.
       - name: Add "status - e2e tests passing"
-        if: success() && github.event_name == 'pull_request'
-        uses: actions/labeler@v3
+        uses: actions-ecosystem/action-add-labels@v1
+        if: |
+          success()
+          && github.event_name == 'pull_request'
+          && ! contains(github.event.pull_request.labels.*.name, format('status{0} e2e tests passing', ':'))
         with:
-          labels: 'status - e2e tests passing'
+          labels: "status: e2e tests passing"
 
+      # Remove the "status: e2e tests failing" and "needs: e2e-testing" labels when tests pass.
+      - name: Remove "status - e2e tests passing" label
+        uses: actions-ecosystem/action-remove-labels@v1
+        if: success() && github.event_name == 'pull_request'
+        with:
+          fail_on_error: false
+          labels: "status: e2e tests failing"
+
+      # Add the "status: e2e tests failing" label when tests fail.
+      - name: Add "status - e2e tests failing" label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: failure() && github.event_name == 'pull_request'
+        with:
+          labels: "status: e2e tests failing"
+
+      # Remove the "status: e2e tests passing" labels when tests fail.
+      - name: Remove "status - e2e tests passing" label
+        uses: actions-ecosystem/action-remove-labels@v1
+        if: failure() && github.event_name == 'pull_request'
+        with:
+          labels: "status: e2e tests passing"
