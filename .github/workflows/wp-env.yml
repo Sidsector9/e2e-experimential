@@ -26,3 +26,9 @@ jobs:
         if: success() && github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, format('status{0} e2e tests failing', ':'))
         with:
           labels: "status: e2e tests failing"
+
+      - name: Add "status - e2e tests failing" label
+        uses: actions-ecosystem/action-add-labels@v1
+        if: failure() && github.event_name == 'pull_request' && ! contains(github.event.pull_request.labels.*.name, format('status{0} e2e tests failing', ':'))
+        with:
+          labels: "status: e2e tests passing"
